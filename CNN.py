@@ -2,9 +2,11 @@
 # os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 import numpy as np
-from tensorflow.keras.datasets import mnist
-from tensorflow import keras
-from tensorflow.keras.layers import Dense, Flatten, Dropout, Conv2D, MaxPooling2D
+from keras.datasets import mnist
+import keras
+from keras.layers import Dense, Flatten, Dropout, Conv2D, MaxPooling2D
+import matplotlib.pyplot as plt
+
 
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
@@ -18,7 +20,7 @@ y_test_cat = keras.utils.to_categorical(y_test, 10)
 x_train = np.expand_dims(x_train, axis=3)
 x_test = np.expand_dims(x_test, axis=3)
 
-print(x_train.shape)
+# print(x_train.shape)
 
 model = keras.Sequential([
     Conv2D(32, (3, 3), padding='same', activation='relu', input_shape=(28, 28, 1)),
@@ -30,13 +32,22 @@ model = keras.Sequential([
     Dense(10,  activation='softmax')
 ])
 
-print(model.summary())
+# print(model.summary())
 
-# model.compile(optimizer='adam',
-#              loss='categorical_crossentropy',
-#              metrics=['accuracy'])
-#
-#
-# his = model.fit(x_train, y_train_cat, batch_size=32, epochs=5, validation_split=0.2)
-#
-# model.evaluate(x_test, y_test_cat)
+model.compile(optimizer='adam',
+             loss='categorical_crossentropy',
+             metrics=['accuracy'])
+
+
+his = model.fit(x_train, y_train_cat, batch_size=32, epochs=5, validation_split=0.2)
+
+eva = model.evaluate(x_test, y_test_cat)
+
+weights = model.get_weights()
+
+with open('history', 'w') as h:
+    h.write(his)
+with open('evaluation', 'w') as e:
+    e.write(eva)
+with open('history', 'w') as w:
+    w.write(weights)
