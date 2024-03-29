@@ -1,3 +1,4 @@
 .idea/
-test.py
+raw_dataset_renamed/
+dataset_renamed/
 /.ipynb_checkpoints/
