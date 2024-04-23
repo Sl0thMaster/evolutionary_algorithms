@@ -3,3 +3,5 @@ raw_dataset_renamed/
 raw_dataset/
 /.ipynb_checkpoints/
 model_weights/weights_0.weights.h5
+/model_weights
+/model_weights
